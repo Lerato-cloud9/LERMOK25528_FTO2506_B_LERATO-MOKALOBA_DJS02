@@ -20,4 +20,20 @@ class PodcastPreview extends HTMLElement {
     // Add click handlers
     this.addEventListeners();
   }
+
+  /**
+   * Define which attributes to watch for changes
+   */
+  static get observedAttributes() {
+    return ['podcast-id', 'title', 'image', 'seasons', 'genres', 'updated'];
+  }
+
+  /**
+   * Called when an observed attribute changes
+   */
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue && this.shadowRoot) {
+      this.render();
+    }
+  }
 }
