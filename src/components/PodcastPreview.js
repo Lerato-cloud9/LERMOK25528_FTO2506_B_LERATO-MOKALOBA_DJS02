@@ -168,5 +168,15 @@ class PodcastPreview extends HTMLElement {
       );
     });
   }
-
+  /**
+   * Helper method to set all data at once
+   */
+  setPodcastData(data) {
+    this.setAttribute('podcast-id', data.id);
+    this.setAttribute('title', data.title);
+    this.setAttribute('image', data.image);
+    this.setAttribute('seasons', data.seasons);
+    this.setAttribute('genres', data.genres.join(', '));
+    this.setAttribute('updated', data.updated);
+  }
 }
