@@ -48,4 +48,10 @@ class PodcastPreview extends HTMLElement {
     const genres = this.getAttribute('genres') || '';
     const updated = this.getAttribute('updated') || '';
 
+    // Split genres into array
+    const genreList = genres
+      .split(',')
+      .map(g => g.trim())
+      .filter(g => g.length > 0);
+
 }
