@@ -148,4 +148,25 @@ class PodcastPreview extends HTMLElement {
       </style>
     `;
   }
+
+  /**
+   * Attaches event listeners
+   */
+  addEventListeners() {
+    const card = this.shadowRoot.querySelector('.card');
+    
+    card.addEventListener('click', () => {
+      // Dispatch custom event when clicked
+      this.dispatchEvent(
+        new CustomEvent('podcast-selected', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            podcastId: this.getAttribute('podcast-id')
+          }
+        })
+      );
+    });
+  }
+
 }
