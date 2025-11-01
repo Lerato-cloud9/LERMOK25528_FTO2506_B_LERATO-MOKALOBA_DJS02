@@ -68,4 +68,84 @@ class PodcastPreview extends HTMLElement {
       </div>
     `;
   }
+
+  /**
+   * Returns encapsulated CSS styles
+   */
+  getStyles() {
+    return `
+      <style>
+        :host {
+          display: block;
+          cursor: pointer;
+        }
+
+        .card {
+          background: white;
+          padding: 1rem;
+          border-radius: 8px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s;
+          height: 100%;
+          box-sizing: border-box;
+        }
+
+        :host(:hover) .card {
+          transform: scale(1.02);
+        }
+
+        .card-image {
+          width: 100%;
+          border-radius: 6px;
+          display: block;
+        }
+
+        .card-title {
+          margin: 0.5rem 0;
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #333;
+        }
+
+        .card-seasons {
+          margin: 0;
+          font-size: 0.8rem;
+          color: #555;
+        }
+
+        .tags {
+          margin: 0.5rem 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .tag {
+          background: #eee;
+          padding: 0.3rem 0.6rem;
+          border-radius: 4px;
+          font-size: 0.8rem;
+          color: #555;
+        }
+
+        .updated-text {
+          font-size: 0.8rem;
+          color: #555;
+          margin: 0.5rem 0 0 0;
+        }
+
+        @media (max-width: 480px) {
+          .card-title {
+            font-size: 1rem;
+          }
+          
+          .card-seasons,
+          .updated-text,
+          .tag {
+            font-size: 0.75rem;
+          }
+        }
+      </style>
+    `;
+  }
 }
