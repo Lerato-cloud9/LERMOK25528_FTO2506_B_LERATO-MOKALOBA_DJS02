@@ -9,12 +9,12 @@ export const DateUtils = {
    * @param {string} dateStr - ISO date string.
    * @returns {string} Formatted date string.
    */
-  format(dateStr) {
-    const date = new Date(dateStr);
-    return `Updated ${date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })}`;
-  },
-};
+format(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", {  // No "Updated" prefix
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+}
