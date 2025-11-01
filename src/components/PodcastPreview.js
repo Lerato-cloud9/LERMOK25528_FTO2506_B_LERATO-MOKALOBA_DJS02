@@ -54,4 +54,18 @@ class PodcastPreview extends HTMLElement {
       .map(g => g.trim())
       .filter(g => g.length > 0);
 
+      // Render HTML
+    this.shadowRoot.innerHTML = `
+      ${this.getStyles()}
+      <div class="card">
+        <img src="${image}" alt="${title}" class="card-image" />
+        <h3 class="card-title">${title}</h3>
+        <p class="card-seasons">Seasons: ${seasons}</p>
+        <div class="tags">
+          ${genreList.map(genre => `<span class="tag">${genre}</span>`).join('')}
+        </div>
+        <p class="updated-text">Updated: ${updated}</p>
+      </div>
+    `;
+  }
 }
