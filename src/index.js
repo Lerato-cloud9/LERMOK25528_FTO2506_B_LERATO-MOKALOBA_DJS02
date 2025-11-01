@@ -1,4 +1,9 @@
-import { podcasts } from "./data.js";
+/**
+ * Main app file
+ * 
+ * Starts the podcast app and sets up all parts like services, components, and views.
+ */
+import { podcasts, genres } from "./data.js";
 import { createGenreService } from './utils/GenreService.js';  // New import
 import { createModal } from "./components/createModal.js";
 import { createGrid } from "./views/createGrid.js";
