@@ -1,18 +1,23 @@
 import { podcasts } from "./data.js";
+import { createGenreService } from './utils/GenreService.js';  // New import
 import { createModal } from "./components/createModal.js";
 import { createGrid } from "./views/createGrid.js";
 
-/**
- * Initializes the podcast application.
- *
- * @principle SRP - Only responsible for application startup logic like event binding and rendering initial grid.
- */
-function init() {
-  document
-    .getElementById("closeModal")
-    .addEventListener("click", createModal.close);
-  const grid = createGrid();
+const initApp = () => {
+  // Create services
+  const genreService = createGenreService(genres);  // New
+  const modal = createModal(genreService);  // New
+  
+  // Create grid with dependencies
+  const grid = createGrid(genreService, (podcast) => {  // New parameters
+    modal.open(podcast);
+  });
+  
   grid.render(podcasts);
-}
+};
 
-init();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
