@@ -36,4 +36,16 @@ class PodcastPreview extends HTMLElement {
       this.render();
     }
   }
+
+   /**
+   * Renders the component's HTML and styles
+   */
+  render() {
+    // Get attributes
+    const title = this.getAttribute('title') || 'Untitled Podcast';
+    const image = this.getAttribute('image') || '';
+    const seasons = this.getAttribute('seasons') || '0';
+    const genres = this.getAttribute('genres') || '';
+    const updated = this.getAttribute('updated') || '';
+
 }
