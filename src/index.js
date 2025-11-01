@@ -35,7 +35,7 @@ import createGrid from './views/createGrid.js';
  * initApp();
  */
 const initApp = () => {
-  // Initialize the genre service with genre data
+  // Create services
   const genreService = createGenreService(genres);
 
   // Get the main grid container element
@@ -48,7 +48,9 @@ const initApp = () => {
    * Create grid renderer with click handler
    * When a podcast card is clicked, open the modal with that podcast's data
    */
-  const grid = createGrid(gridContainer, genreService, (podcast) => {
+
+  // Create grid with dependencies
+  const grid = createGrid(gridContainer, genreService, (podcast) => {  // ← New parameters
     modal.open(podcast);
   });
 
