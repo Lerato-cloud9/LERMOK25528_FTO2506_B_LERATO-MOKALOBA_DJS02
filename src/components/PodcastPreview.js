@@ -180,3 +180,8 @@ class PodcastPreview extends HTMLElement {
     this.setAttribute('updated', data.updated);
   }
 }
+
+// Register the custom element
+customElements.define('podcast-preview', PodcastPreview);
+
+export default PodcastPreview;
