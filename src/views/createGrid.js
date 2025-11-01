@@ -1,82 +1,84 @@
 /**
- * createGrid - Grid renderer factory
- * 
- * Manages the layout and rendering of podcast preview components.
- * This module handles creating and organizing podcast-preview web components
- * in a responsive grid layout.
+ * Grid Renderer - Responsible for rendering the grid of podcast cards using Web Components.
+ *
+ * This module manages the layout and rendering of podcast preview components.
+ * It creates podcast-preview custom elements for each podcast and handles
+ * their lifecycle and event delegation.
+ *
+ * @principle SRP - Manages layout and rendering only; delegates card creation 
+ * to the PodcastPreview Web Component and modal logic to the caller.
  * 
  * @module createGrid
  */
 
-import '../components/PodcastPreview.js';
-import DateUtils from '../utils/DateUtils.js';
+import '../components/PodcastPreview.js';  // Import the Web Component (registers the custom element)
+import { DateUtils } from '../utils/DateUtils.js';  // Import date formatting utility
 
 /**
  * Creates a grid renderer instance
  * 
- * @param {HTMLElement} container - The DOM element that will contain the grid
- * @param {Object} genreService - Service for resolving genre IDs to names
- * @param {Function} onCardClick - Callback function when a card is clicked
- * @returns {Object} Grid renderer interface with render and clear methods
+ * Factory function that returns an object with methods to render and manage
+ * the podcast grid. This function encapsulates the grid container reference
+ * and provides a clean interface for rendering operations.
  */
-const createGrid = (container, genreService, onCardClick) => {
-  /**
-   * Renders podcast cards in the grid using Web Components
-   * 
-   * Creates a podcast-preview element for each podcast and populates it
-   * with formatted data. Attaches event listeners for user interactions.
-   * 
-   * @param {Array<Object>} podcasts - Array of podcast objects to render
-   * @param {string} podcasts[].id - Unique podcast identifier
-   * @param {string} podcasts[].title - Podcast title
-   * @param {string} podcasts[].image - URL to podcast cover image
-   * @param {Array<Object>} podcasts[].seasons - Array of season objects
-   * @param {Array<number>} podcasts[].genres - Array of genre IDs
-   * @param {string} podcasts[].updated - ISO date string of last update
-   */
-  const render = (podcasts) => {
-    // Clear existing content
-    container.innerHTML = '';
 
-    // Create and append podcast-preview components
-    podcasts.forEach(podcast => {
-      // Create custom element
-      const previewElement = document.createElement('podcast-preview');
-      
-      // Get genre names from IDs
-      const genreNames = genreService.getNames(podcast.genres);
-      
-      // Set podcast data using the component's method
-      previewElement.setPodcastData({
-        id: podcast.id,
-        title: podcast.title,
-        image: podcast.image,
-        seasons: podcast.seasons.length,
-        genres: genreNames,
-        updated: DateUtils.format(podcast.updated)
-      });
-
-      // Listen for the custom event from the component
-      previewElement.addEventListener('podcast-selected', (event) => {
-        onCardClick(podcast);
-      });
-
-      container.appendChild(previewElement);
-    });
-  };
-
-  /**
-   * Clears all content from the grid
-   * Removes all podcast-preview elements from the container
-   */
-  const clear = () => {
-    container.innerHTML = '';
-  };
+export const createGrid = (genreService, onPodcastClick) => {  // ← New parameters
+  // Get reference to the grid container element
+  const container = document.getElementById("podcastGrid");
 
   return {
-    render,
-    clear
+    /**
+     * Renders a list of podcast cards into the grid using Web Components.
+     * 
+     * Clears the existing grid content and creates a new podcast-preview
+     * custom element for each podcast in the list. Each component is
+     * populated with formatted data and configured to emit events on user
+     * interaction.
+     */
+    render(podcastList) { 
+    // Clear existing content to prevent duplicates      
+      container.innerHTML = "";
+      
+      // Create a Web Component for each podcast
+      podcastList.forEach((podcast) => {
+      // Create the custom podcast-preview element
+        const previewElement = document.createElement('podcast-preview');
+        
+      // Resolve genre IDs to human-readable names using the service
+        const genreNames = genreService.getNames(podcast.genres);
+        
+      // Set all podcast data on the Web Component at once
+      // This uses the component's helper method for cleaner code
+        previewElement.setPodcastData({
+          id: podcast.id,
+          title: podcast.title,
+          image: podcast.image,
+          seasons: podcast.seasons.length, // Count of seasons
+          genres: genreNames,              // Resolved genre names (not IDs)
+          updated: DateUtils.format(podcast.updated) // Formatted date
+        });
+
+        // Listen for component event
+        previewElement.addEventListener('podcast-selected', (event) => {
+          onPodcastClick(podcast);
+        });
+
+        // Append the Web Component to the grid container
+        container.appendChild(previewElement);
+      });
+    },
+
+    /**
+     * Clears all content from the grid
+     * 
+     * Removes all podcast-preview elements from the container.
+     * Useful for refreshing the grid or cleaning up before navigation.
+     * 
+     * @example
+     * grid.clear();
+     */
+    clear() {
+      container.innerHTML = "";
+    }
   };
 };
-
-export default createGrid;
