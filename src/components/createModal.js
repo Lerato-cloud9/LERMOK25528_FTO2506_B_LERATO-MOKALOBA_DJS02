@@ -142,18 +142,20 @@ function updateContent(podcast) {
   }
 }
 
-  return {
-    /**
-     * Opens the modal with podcast details.
-     * @param {Object} podcast - Podcast object.
-     */
-    open(podcast) {
-      updateContent(podcast);
-      modal.classList.remove("hidden");
-    },
-    /** Closes the modal. */
-    close() {
-      modal.classList.add("hidden");
-    },
-  };
-})();
+ /**
+ * Renders the list of seasons for a given podcast.
+ * Retrieves season data and creates list items for each season.
+ * 
+ * @private
+ * @param {string} podcastId - The podcast ID to get seasons for
+ */
+function renderSeasons(podcastId) {
+  if (!elements.seasonList) return;
+
+  // Find seasons for this podcast
+  const podcastSeasons = seasons.find(s => s.id === podcastId);
+
+  if (!podcastSeasons || !podcastSeasons.seasonDetails) {
+    elements.seasonList.innerHTML = '<li>No season information available</li>';
+    return;
+  }
