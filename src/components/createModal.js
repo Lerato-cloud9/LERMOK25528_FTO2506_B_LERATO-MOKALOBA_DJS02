@@ -99,6 +99,25 @@ function close() {
   document.body.style.overflow = '';
 }
 
+/**
+ * Updates the modal content with podcast details.
+ * Populates all modal elements with the provided podcast data.
+ * 
+ * @private
+ * @param {Object} podcast - The podcast object containing all details
+ */
+function updateContent(podcast) {
+  // Update title
+  if (elements.title) {
+    elements.title.textContent = podcast.title;
+  }
+
+  // Update image
+  if (elements.image) {
+    elements.image.src = podcast.image;
+    elements.image.alt = `${podcast.title} cover`;
+  }
+  
   return {
     /**
      * Opens the modal with podcast details.
