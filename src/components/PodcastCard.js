@@ -25,7 +25,6 @@
  *   updated="2022-11-03T07:00:00.000Z">
  * </podcast-card>
  */
-
 class PodcastCard extends HTMLElement {
   /**
    * Creates an instance of PodcastCard.
@@ -67,9 +66,8 @@ class PodcastCard extends HTMLElement {
       this.render();
     }
   }
-}
 
-/**
+  /**
    * Formats an ISO date string into a human-readable format.
    * 
    * @param {string} isoDate - ISO date string (e.g., "2022-11-03T07:00:00.000Z")
@@ -104,7 +102,7 @@ class PodcastCard extends HTMLElement {
       .map(genre => `<span class="tag">${genre}</span>`)
       .join('');
 
-      this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>
         :host {
           display: block;
