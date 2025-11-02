@@ -31,6 +31,15 @@ const modal = document.getElementById('modal');
  * @type {Object}
  */
 
+const elements = {
+  title: document.getElementById('modalTitle'),
+  image: document.getElementById('modalImage'),
+  description: document.getElementById('modalDesc'),
+  genres: document.getElementById('modalGenres'),
+  updated: document.getElementById('modalUpdated'),
+  seasonList: document.getElementById('seasonList')
+};
+
 export const createModal = (() => {
   const el = (id) => document.getElementById(id);
   const modal = el("modal");
