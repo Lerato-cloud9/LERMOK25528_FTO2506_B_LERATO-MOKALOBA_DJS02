@@ -44,4 +44,27 @@ class PodcastCard extends HTMLElement {
     this.render();
     this.setupEventListeners();
   }
+
+  /**
+   * Specifies which attributes to observe for changes.
+   * 
+   * @returns {string[]} Array of attribute names to observe
+   */
+  static get observedAttributes() {
+    return ['title', 'image', 'genres', 'seasons', 'updated'];
+  }
+
+  /**
+   * Lifecycle callback invoked when an observed attribute changes.
+   * Re-renders the component with updated data.
+   * 
+   * @param {string} name - The name of the changed attribute
+   * @param {string} oldValue - The previous value
+   * @param {string} newValue - The new value
+   */
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      this.render();
+    }
+  }
 }
