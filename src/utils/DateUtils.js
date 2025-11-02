@@ -56,6 +56,15 @@ function format(isoDateString, options = {}) {
       day: '2-digit'
     };
 
+    const formattedDate = date.toLocaleDateString(locale, formatOptions);
+    
+    return includePrefix ? `Updated: ${formattedDate}` : formattedDate;
+  } catch (error) {
+    console.error('Error formatting date:', error);
+    return '';
+  }
+}
+
   format(dateStr) {
     const date = new Date(dateStr);
     return `Updated ${date.toLocaleDateString("en-US", {
