@@ -103,4 +103,86 @@ class PodcastCard extends HTMLElement {
       .filter(genre => genre)
       .map(genre => `<span class="tag">${genre}</span>`)
       .join('');
+
+      this.shadowRoot.innerHTML = `
+      <style>
+        :host {
+          display: block;
+        }
+
+        .card {
+          background: white;
+          padding: 1rem;
+          border-radius: 8px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          transition: transform 0.2s;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .card:hover {
+          transform: scale(1.02);
+        }
+
+        .card-image {
+          width: 100%;
+          border-radius: 6px;
+          aspect-ratio: 1;
+          object-fit: cover;
+        }
+
+        .card-title {
+          margin: 0.5rem 0;
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #333;
+        }
+
+        .card-info {
+          margin: 0;
+          font-size: 0.8rem;
+          color: #555;
+        }
+
+        .tags {
+          margin: 0.5rem 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .tag {
+          background: #eee;
+          padding: 0.3rem 0.6rem;
+          border-radius: 4px;
+          display: inline-block;
+          font-size: 0.8rem;
+          color: #555;
+        }
+
+        .updated-text {
+          font-size: 0.8rem;
+          color: #555;
+          margin-top: auto;
+          padding-top: 0.5rem;
+        }
+      </style>
+
+      <article class="card">
+        <img 
+          class="card-image" 
+          src="${image}" 
+          alt="${title} cover"
+          loading="lazy"
+        />
+        <h3 class="card-title">${title}</h3>
+        <p class="card-info">Seasons: ${seasons}</p>
+        <div class="tags">
+          ${genreList}
+        </div>
+        <p class="updated-text">${this.formatDate(updated)}</p>
+      </article>
+    `;
   }
