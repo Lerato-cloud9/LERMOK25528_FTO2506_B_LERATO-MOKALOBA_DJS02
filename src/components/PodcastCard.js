@@ -68,3 +68,19 @@ class PodcastCard extends HTMLElement {
     }
   }
 }
+
+/**
+   * Formats an ISO date string into a human-readable format.
+   * 
+   * @param {string} isoDate - ISO date string (e.g., "2022-11-03T07:00:00.000Z")
+   * @returns {string} Formatted date string (e.g., "Updated: 03 Nov 2022")
+   */
+  formatDate(isoDate) {
+    if (!isoDate) return '';
+    
+    const date = new Date(isoDate);
+    const options = { year: 'numeric', month: 'short', day: '2-digit' };
+    const formatted = date.toLocaleDateString('en-US', options);
+    
+    return `Updated: ${formatted}`;
+  }
