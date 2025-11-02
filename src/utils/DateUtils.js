@@ -7,6 +7,28 @@
  * @principle SRP - Only responsible for date-related transformations
  */
 
+/**
+ * Formats an ISO date string into a human-readable format.
+ * 
+ * @param {string} isoDateString - ISO 8601 date string (e.g., "2022-11-03T07:00:00.000Z")
+ * @param {Object} [options] - Formatting options
+ * @param {boolean} [options.includePrefix=true] - Whether to include "Updated: " prefix
+ * @param {string} [options.locale='en-US'] - Locale for date formatting
+ * @returns {string} Formatted date string (e.g., "Updated: 03 Nov 2022")
+ * 
+ * @example
+ * DateUtils.format("2022-11-03T07:00:00.000Z")
+ * // Returns: "Updated: 03 Nov 2022"
+ * 
+ * @example
+ * DateUtils.format("2022-11-03T07:00:00.000Z", { includePrefix: false })
+ * // Returns: "03 Nov 2022"
+ * 
+ * @example
+ * DateUtils.format("invalid-date")
+ * // Returns: ""
+ */
+
 export const DateUtils = {
   /**
    * Formats a date string into a human-readable format.
