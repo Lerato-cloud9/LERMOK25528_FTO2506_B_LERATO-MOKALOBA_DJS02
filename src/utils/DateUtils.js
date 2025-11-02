@@ -1,8 +1,12 @@
 /**
- * Date Formatter - Utility function for date formatting.
- *
- * @principle SRP - Single Responsibility Principle: This module only formats dates and does not handle any unrelated logic.
+ * DateUtils - Utility service for date formatting operations
+ * 
+ * Provides methods to format dates consistently across the application.
+ * 
+ * @module DateUtils
+ * @principle SRP - Only responsible for date-related transformations
  */
+
 export const DateUtils = {
   /**
    * Formats a date string into a human-readable format.
