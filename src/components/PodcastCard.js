@@ -25,3 +25,23 @@
  *   updated="2022-11-03T07:00:00.000Z">
  * </podcast-card>
  */
+
+class PodcastCard extends HTMLElement {
+  /**
+   * Creates an instance of PodcastCard.
+   * Sets up Shadow DOM for encapsulation.
+   */
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  /**
+   * Lifecycle callback invoked when the element is added to the DOM.
+   * Renders the component's initial content and sets up event listeners.
+   */
+  connectedCallback() {
+    this.render();
+    this.setupEventListeners();
+  }
+}
