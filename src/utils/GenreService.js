@@ -54,15 +54,26 @@ function getNames(genreIds) {
  * // Returns: { id: 1, title: "Personal Growth", description: "...", shows: [...] }
  */
 
+function getById(genreId) {
+  return genres.find(g => g.id === genreId) || null;
+}
+
+/**
+ * Retrieves all available genres.
+ * 
+ * @returns {Array<Object>} Array of all genre objects
+ * 
+ * @example
+ * GenreService.getAll()
+ * // Returns: [{ id: 1, title: "Personal Growth", ... }, ...]
+ */
+function getAll() {
+  return genres;
+}
+
+// Export the public API
 export const GenreService = {
-  /**
-   * Resolves an array of genre IDs into an array of genre titles.
-   * @param {number[]} genreIds - Array of genre IDs.
-   * @returns {string[]} Array of genre titles.
-   */
-  getNames(genreIds) {
-    return genreIds.map(
-      (id) => genres.find((g) => g.id === id)?.title || "Unknown"
-    );
-  },
+  getNames,
+  getById,
+  getAll
 };
