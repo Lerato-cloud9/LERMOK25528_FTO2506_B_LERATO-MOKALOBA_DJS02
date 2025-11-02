@@ -29,12 +29,18 @@
  * // Returns: ""
  */
 
-export const DateUtils = {
-  /**
-   * Formats a date string into a human-readable format.
-   * @param {string} dateStr - ISO date string.
-   * @returns {string} Formatted date string.
-   */
+function format(isoDateString, options = {}) {
+  const {
+    includePrefix = true,
+    locale = 'en-US'
+  } = options;
+
+  // Validate input
+  if (!isoDateString || typeof isoDateString !== 'string') {
+    console.warn('DateUtils.format expects a valid ISO date string');
+    return '';
+  }
+  
   format(dateStr) {
     const date = new Date(dateStr);
     return `Updated ${date.toLocaleDateString("en-US", {
