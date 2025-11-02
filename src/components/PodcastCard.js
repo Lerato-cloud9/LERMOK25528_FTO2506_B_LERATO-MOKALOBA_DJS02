@@ -1,83 +1,111 @@
 /**
- * PodcastPreview Web Component
+ * PodcastCard Web Component
  * 
- * A custom HTML element that displays a podcast preview card with encapsulated
- * styles and behavior.
+ * A custom HTML element that displays a podcast preview card with image,
+ * title, genres, seasons, and last updated date.
  * 
- * @element podcast-preview
+ * @element podcast-card
+ * 
+ * @attr {string} podcast-id - The unique identifier for the podcast
+ * @attr {string} title - The podcast title
+ * @attr {string} image - URL to the podcast cover image
+ * @attr {string} genres - Comma-separated genre names
+ * @attr {number} seasons - Number of seasons
+ * @attr {string} updated - ISO date string of last update
+ * 
+ * @fires podcast-selected - Dispatched when card is clicked, contains podcast ID
+ * 
+ * @example
+ * <podcast-card
+ *   podcast-id="10716"
+ *   title="Something Was Wrong"
+ *   image="https://example.com/image.jpg"
+ *   genres="Personal Growth, Investigative Journalism"
+ *   seasons="14"
+ *   updated="2022-11-03T07:00:00.000Z">
+ * </podcast-card>
  */
-class PodcastPreview extends HTMLElement {
+class PodcastCard extends HTMLElement {
   /**
-   * Called when element is added to the DOM
+   * Creates an instance of PodcastCard.
+   * Sets up Shadow DOM for encapsulation.
+   */
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  /**
+   * Lifecycle callback invoked when the element is added to the DOM.
+   * Renders the component's initial content and sets up event listeners.
    */
   connectedCallback() {
-    // Attach shadow DOM for style encapsulation
-    this.attachShadow({ mode: 'open' });
-    
-    // Render the component
     this.render();
-    
-    // Add click handlers
-    this.addEventListeners();
+    this.setupEventListeners();
   }
 
   /**
-   * Define which attributes to watch for changes
+   * Specifies which attributes to observe for changes.
+   * 
+   * @returns {string[]} Array of attribute names to observe
    */
   static get observedAttributes() {
-    return ['podcast-id', 'title', 'image', 'seasons', 'genres', 'updated'];
+    return ['title', 'image', 'genres', 'seasons', 'updated'];
   }
 
   /**
-   * Called when an observed attribute changes
+   * Lifecycle callback invoked when an observed attribute changes.
+   * Re-renders the component with updated data.
+   * 
+   * @param {string} name - The name of the changed attribute
+   * @param {string} oldValue - The previous value
+   * @param {string} newValue - The new value
    */
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue && this.shadowRoot) {
+    if (oldValue !== newValue) {
       this.render();
     }
   }
 
-   /**
-   * Renders the component's HTML and styles
+  /**
+   * Formats an ISO date string into a human-readable format.
+   * 
+   * @param {string} isoDate - ISO date string (e.g., "2022-11-03T07:00:00.000Z")
+   * @returns {string} Formatted date string (e.g., "Updated: 03 Nov 2022")
    */
-  render() {
-    // Get attributes
-    const title = this.getAttribute('title') || 'Untitled Podcast';
-    const image = this.getAttribute('image') || '';
-    const seasons = this.getAttribute('seasons') || '0';
-    const genres = this.getAttribute('genres') || '';
-    const updated = this.getAttribute('updated') || '';
-
-    // Split genres into array
-    const genreList = genres
-      .split(',')
-      .map(g => g.trim())
-      .filter(g => g.length > 0);
-
-      // Render HTML
-    this.shadowRoot.innerHTML = `
-      ${this.getStyles()}
-      <div class="card">
-        <img src="${image}" alt="${title}" class="card-image" />
-        <h3 class="card-title">${title}</h3>
-        <p class="card-seasons">Seasons: ${seasons}</p>
-        <div class="tags">
-          ${genreList.map(genre => `<span class="tag">${genre}</span>`).join('')}
-        </div>
-        <p class="updated-text">Updated: ${updated}</p>
-      </div>
-    `;
+  formatDate(isoDate) {
+    if (!isoDate) return '';
+    
+    const date = new Date(isoDate);
+    const options = { year: 'numeric', month: 'short', day: '2-digit' };
+    const formatted = date.toLocaleDateString('en-US', options);
+    
+    return `Updated: ${formatted}`;
   }
 
   /**
-   * Returns encapsulated CSS styles
+   * Renders the component's HTML and CSS into the Shadow DOM.
+   * This method creates the complete structure of the podcast card.
    */
-  getStyles() {
-    return `
+  render() {
+    const title = this.getAttribute('title') || '';
+    const image = this.getAttribute('image') || '';
+    const genres = this.getAttribute('genres') || '';
+    const seasons = this.getAttribute('seasons') || '0';
+    const updated = this.getAttribute('updated') || '';
+
+    // Split genres string into array and create tags
+    const genreList = genres
+      .split(',')
+      .map(genre => genre.trim())
+      .filter(genre => genre)
+      .map(genre => `<span class="tag">${genre}</span>`)
+      .join('');
+
+    this.shadowRoot.innerHTML = `
       <style>
         :host {
           display: block;
-          cursor: pointer;
         }
 
         .card {
@@ -85,19 +113,22 @@ class PodcastPreview extends HTMLElement {
           padding: 1rem;
           border-radius: 8px;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
           transition: transform 0.2s;
           height: 100%;
-          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
         }
 
-        :host(:hover) .card {
+        .card:hover {
           transform: scale(1.02);
         }
 
         .card-image {
           width: 100%;
           border-radius: 6px;
-          display: block;
+          aspect-ratio: 1;
+          object-fit: cover;
         }
 
         .card-title {
@@ -107,7 +138,7 @@ class PodcastPreview extends HTMLElement {
           color: #333;
         }
 
-        .card-seasons {
+        .card-info {
           margin: 0;
           font-size: 0.8rem;
           color: #555;
@@ -124,6 +155,7 @@ class PodcastPreview extends HTMLElement {
           background: #eee;
           padding: 0.3rem 0.6rem;
           border-radius: 4px;
+          display: inline-block;
           font-size: 0.8rem;
           color: #555;
         }
@@ -131,57 +163,58 @@ class PodcastPreview extends HTMLElement {
         .updated-text {
           font-size: 0.8rem;
           color: #555;
-          margin: 0.5rem 0 0 0;
-        }
-
-        @media (max-width: 480px) {
-          .card-title {
-            font-size: 1rem;
-          }
-          
-          .card-seasons,
-          .updated-text,
-          .tag {
-            font-size: 0.75rem;
-          }
+          margin-top: auto;
+          padding-top: 0.5rem;
         }
       </style>
+
+      <article class="card">
+        <img 
+          class="card-image" 
+          src="${image}" 
+          alt="${title} cover"
+          loading="lazy"
+        />
+        <h3 class="card-title">${title}</h3>
+        <p class="card-info">Seasons: ${seasons}</p>
+        <div class="tags">
+          ${genreList}
+        </div>
+        <p class="updated-text">${this.formatDate(updated)}</p>
+      </article>
     `;
   }
 
   /**
-   * Attaches event listeners
+   * Sets up event listeners for user interactions.
+   * Dispatches a custom event when the card is clicked.
    */
-  addEventListeners() {
+  setupEventListeners() {
     const card = this.shadowRoot.querySelector('.card');
     
     card.addEventListener('click', () => {
-      // Dispatch custom event when clicked
+      const podcastId = this.getAttribute('podcast-id');
+      
+      /**
+       * Custom event dispatched when a podcast card is clicked.
+       * 
+       * @event podcast-selected
+       * @type {CustomEvent}
+       * @property {Object} detail - Event details
+       * @property {string} detail.podcastId - The ID of the selected podcast
+       */
       this.dispatchEvent(
         new CustomEvent('podcast-selected', {
+          detail: { podcastId },
           bubbles: true,
-          composed: true,
-          detail: {
-            podcastId: this.getAttribute('podcast-id')
-          }
+          composed: true
         })
       );
     });
   }
-  /**
-   * Helper method to set all data at once
-   */
-  setPodcastData(data) {
-    this.setAttribute('podcast-id', data.id);
-    this.setAttribute('title', data.title);
-    this.setAttribute('image', data.image);
-    this.setAttribute('seasons', data.seasons);
-    this.setAttribute('genres', data.genres.join(', '));
-    this.setAttribute('updated', data.updated);
-  }
 }
 
 // Register the custom element
-customElements.define('podcast-preview', PodcastPreview);
+customElements.define('podcast-card', PodcastCard);
 
-export default PodcastPreview;
+export default PodcastCard;
