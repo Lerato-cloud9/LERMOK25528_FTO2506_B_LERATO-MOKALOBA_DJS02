@@ -95,4 +95,12 @@ class PodcastCard extends HTMLElement {
     const genres = this.getAttribute('genres') || '';
     const seasons = this.getAttribute('seasons') || '0';
     const updated = this.getAttribute('updated') || '';
+
+    // Split genres string into array and create tags
+    const genreList = genres
+      .split(',')
+      .map(genre => genre.trim())
+      .filter(genre => genre)
+      .map(genre => `<span class="tag">${genre}</span>`)
+      .join('');
   }
