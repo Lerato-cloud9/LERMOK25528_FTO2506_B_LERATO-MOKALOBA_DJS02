@@ -17,15 +17,19 @@ import './components/PodcastCard.js'; // Import to register the Web Component
 
 /**
  * Initializes the podcast application.
- *
- * @principle SRP - Only responsible for application startup logic like event binding and rendering initial grid.
+ * Sets up event listeners and renders the initial grid of podcasts.
  */
 function init() {
-  document
-    .getElementById("closeModal")
-    .addEventListener("click", createModal.close);
+  // Set up modal close button
+  const closeButton = document.getElementById('closeModal');
+  if (closeButton) {
+    closeButton.addEventListener('click', createModal.close);
+  }
+
+  // Create and render the grid
   const grid = createGrid();
   grid.render(podcasts);
-}
 
-init();
+  // Listen for podcast card selections
+  setupPodcastCardListeners();
+}
