@@ -99,6 +99,17 @@ function formatRelative(isoDateString) {
   }
 }
 
+/**
+ * Parses an ISO date string and returns a Date object.
+ * 
+ * @param {string} isoDateString - ISO 8601 date string
+ * @returns {Date|null} Date object or null if invalid
+ * 
+ * @example
+ * DateUtils.parse("2022-11-03T07:00:00.000Z")
+ * // Returns: Date object
+ */
+
   format(dateStr) {
     const date = new Date(dateStr);
     return `Updated ${date.toLocaleDateString("en-US", {
