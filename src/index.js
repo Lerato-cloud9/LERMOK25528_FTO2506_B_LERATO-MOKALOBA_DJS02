@@ -33,3 +33,27 @@ function init() {
   // Listen for podcast card selections
   setupPodcastCardListeners();
 }
+
+/**
+ * Sets up a global event listener for podcast card selections.
+ * Uses event delegation to handle clicks from all podcast-card components.
+ * 
+ * The podcast-card Web Component dispatches a 'podcast-selected' event
+ * with the podcast ID in the detail property.
+ */
+function setupPodcastCardListeners() {
+  document.addEventListener('podcast-selected', (event) => {
+    const podcastId = event.detail.podcastId;
+    
+    // Find the full podcast data
+    const podcast = podcasts.find(p => p.id === podcastId);
+    
+    if (podcast) {
+      // Open the modal with the selected podcast
+      createModal.open(podcast);
+    }
+  });
+}
+
+// Start the application
+init();
