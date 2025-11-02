@@ -189,3 +189,24 @@ function createSeasonItem(season) {
     </li>
   `;
 }
+
+/**
+ * Checks if the modal is currently open.
+ * 
+ * @returns {boolean} True if modal is visible, false otherwise
+ * 
+ * @example
+ * if (createModal.isOpen()) {
+ *   // Modal is currently displayed
+ * }
+ */
+function isOpen() {
+  return modal && !modal.classList.contains('hidden');
+}
+
+// Export the public API
+export const createModal = {
+  open,
+  close,
+  isOpen
+};
