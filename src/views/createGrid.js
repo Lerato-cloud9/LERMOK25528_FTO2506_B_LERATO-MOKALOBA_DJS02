@@ -18,7 +18,22 @@ export function createGrid() {
    * @type {HTMLElement|null}
    */
   const container = document.getElementById('podcastGrid');
-  
+
+  /**
+   * Renders a list of podcasts as custom podcast-card elements.
+   * Clears existing content and creates new Web Components for each podcast.
+   * 
+   * @param {Array<Object>} podcasts - Array of podcast objects to render
+   * @param {string} podcasts[].id - Specific podcast identifier
+   * @param {string} podcasts[].title - Podcast title
+   * @param {string} podcasts[].image - URL to podcast cover image
+   * @param {Array<number>} podcasts[].genres - Array of genre IDs
+   * @param {number} podcasts[].seasons - Number of seasons
+   * @param {string} podcasts[].updated - ISO date string of last update
+   * 
+   * @throws {Error} If container element is not found
+   */
+
   return {
     /**
      * Renders a list of podcast cards into the grid.
