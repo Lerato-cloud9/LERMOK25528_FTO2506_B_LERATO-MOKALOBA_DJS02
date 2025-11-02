@@ -40,14 +40,30 @@ const elements = {
   seasonList: document.getElementById('seasonList')
 };
 
-export const createModal = (() => {
-  const el = (id) => document.getElementById(id);
-  const modal = el("modal");
+/**
+ * Opens the modal and displays podcast details.
+ * 
+ * @param {Object} podcast - The podcast object to display
+ * @param {string} podcast.id - Unique podcast identifier
+ * @param {string} podcast.title - Podcast title
+ * @param {string} podcast.image - URL to podcast cover image
+ * @param {string} podcast.description - Podcast description
+ * @param {Array<number>} podcast.genres - Array of genre IDs
+ * @param {string} podcast.updated - ISO date string of last update
+ * 
+ * @throws {Error} If modal element is not found in DOM
+ * 
+ * @example
+ * createModal.open({
+ *   id: "10716",
+ *   title: "Something Was Wrong",
+ *   image: "https://...",
+ *   description: "A true-crime docuseries...",
+ *   genres: [1, 2],
+ *   updated: "2022-11-03T07:00:00.000Z"
+ * });
+ */
 
-  /**
-   * Updates the modal content with podcast details.
-   * @param {Object} podcast - Podcast object.
-   */
   function updateContent(podcast) {
     el("modalImage").src = podcast.image;
     el("modalTitle").textContent = podcast.title;
