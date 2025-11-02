@@ -110,12 +110,21 @@ function formatRelative(isoDateString) {
  * // Returns: Date object
  */
 
-  format(dateStr) {
-    const date = new Date(dateStr);
-    return `Updated ${date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })}`;
-  },
+  function parse(isoDateString) {
+  if (!isoDateString) return null;
+
+  try {
+    const date = new Date(isoDateString);
+    return isNaN(date.getTime()) ? null : date;
+  } catch (error) {
+    console.error('Error parsing date:', error);
+    return null;
+  }
+}
+
+// Export the public API
+export const DateUtils = {
+  format,
+  formatRelative,
+  parse
 };

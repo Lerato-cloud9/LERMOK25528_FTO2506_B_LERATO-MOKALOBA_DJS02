@@ -3,11 +3,22 @@ import { DateUtils } from "../utils/DateUtils.js";
 import { seasons } from "../data.js";
 
 /**
- * Modal Controller - Controls the podcast details modal.
- *
- * @principle SRP - Handles modal logic only (open, close, update content).
- * @principle OCP - Open/Closed Principle: New fields (e.g. ratings) could be added to modal without modifying external usage.
+ * createModal - Factory function for modal controller
+ * 
+ * Creates a modal controller that manages the display of podcast details
+ * in a modal overlay. Handles opening, closing, and updating modal content.
+ * 
+ * @factory
+ * @principle SRP - Only responsible for modal display logic and content updates
+ * @principle Encapsulation - Internal state and DOM references are private
+ * 
+ * @example
+ * import { createModal } from './components/createModal.js';
+ * 
+ * createModal.open(podcastData);
+ * createModal.close();
  */
+
 export const createModal = (() => {
   const el = (id) => document.getElementById(id);
   const modal = el("modal");
