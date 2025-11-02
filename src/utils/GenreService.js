@@ -25,6 +25,20 @@ import { genres } from "../data.js";
  * // Returns: []
  */
 
+function getNames(genreIds) {
+  if (!Array.isArray(genreIds)) {
+    console.warn('GenreService.getNames expects an array of IDs');
+    return [];
+  }
+
+  return genreIds
+    .map(id => {
+      const genre = genres.find(g => g.id === id);
+      return genre ? genre.title : null;
+    })
+    .filter(name => name !== null);
+}
+
 export const GenreService = {
   /**
    * Resolves an array of genre IDs into an array of genre titles.
