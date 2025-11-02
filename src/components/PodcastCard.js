@@ -84,3 +84,15 @@ class PodcastCard extends HTMLElement {
     
     return `Updated: ${formatted}`;
   }
+
+  /**
+   * Renders the component's HTML and CSS into the Shadow DOM.
+   * This method creates the complete structure of the podcast card.
+   */
+  render() {
+    const title = this.getAttribute('title') || '';
+    const image = this.getAttribute('image') || '';
+    const genres = this.getAttribute('genres') || '';
+    const seasons = this.getAttribute('seasons') || '0';
+    const updated = this.getAttribute('updated') || '';
+  }
