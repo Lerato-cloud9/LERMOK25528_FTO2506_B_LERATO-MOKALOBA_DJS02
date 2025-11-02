@@ -1,10 +1,15 @@
 import { genres } from "../data.js";
 
 /**
- * Service to retrieve genre titles from genre IDs.
- *
- * @principle SRP - Single Responsibility Principle: Only responsible for mapping genre IDs to names.
+ * GenreService - Utility service for genre-related operations
+ * 
+ * Provides methods to resolve genre IDs to their corresponding names
+ * and other genre-related functionality.
+ * 
+ * @module GenreService
+ * @principle SRP - Only responsible for genre data transformations
  */
+
 export const GenreService = {
   /**
    * Resolves an array of genre IDs into an array of genre titles.
