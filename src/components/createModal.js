@@ -64,32 +64,21 @@ const elements = {
  * });
  */
 
-  function updateContent(podcast) {
-    el("modalImage").src = podcast.image;
-    el("modalTitle").textContent = podcast.title;
-    el("modalDesc").textContent = podcast.description;
-
-    el("modalGenres").innerHTML = GenreService.getNames(podcast.genres)
-      .map((g) => `<span class="tag">${g}</span>`)
-      .join("");
-
-    el("modalUpdated").textContent = DateUtils.format(podcast.updated);
-
-    const seasonData =
-      seasons.find((s) => s.id === podcast.id)?.seasonDetails || [];
-    el("seasonList").innerHTML = seasonData
-      .map(
-        (s, index) => `
-          <li class="season-item">
-            <strong class="season-title">Season ${index + 1}: ${
-          s.title
-        }</strong>
-            <span class="episodes">${s.episodes} episodes</span>
-          </li>`
-      )
-      .join("");
+  function open(podcast) {
+  if (!modal) {
+    console.error('Modal element not found');
+    return;
   }
 
+  // Update modal content
+  updateContent(podcast);
+
+  // Show the modal
+  modal.classList.remove('hidden');
+
+  // Prevent body scroll when modal is open
+  document.body.style.overflow = 'hidden';
+}
   return {
     /**
      * Opens the modal with podcast details.
