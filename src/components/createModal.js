@@ -159,3 +159,33 @@ function renderSeasons(podcastId) {
     elements.seasonList.innerHTML = '<li>No season information available</li>';
     return;
   }
+
+   // Create season list items
+  elements.seasonList.innerHTML = podcastSeasons.seasonDetails
+    .map(season => createSeasonItem(season))
+    .join('');
+}
+
+/**
+ * Creates an HTML string for a single season list item.
+ * 
+ * @private
+ * @param {Object} season - Season object
+ * @param {string} season.title - Season title
+ * @param {number} season.episodes - Number of episodes
+ * @returns {string} HTML string for the season item
+ * 
+ * @example
+ * createSeasonItem({ title: "Season 1", episodes: 10 })
+ * // Returns: '<li class="season-item">...</li>'
+ */
+function createSeasonItem(season) {
+  const episodeText = season.episodes === 1 ? 'episode' : 'episodes';
+  
+  return `
+    <li class="season-item">
+      <span class="season-title">${season.title}</span>
+      <span class="episodes">${season.episodes} ${episodeText}</span>
+    </li>
+  `;
+}
