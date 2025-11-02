@@ -185,7 +185,7 @@ class PodcastCard extends HTMLElement {
     `;
   }
 
-  **
+  /**
    * Sets up event listeners for user interactions.
    * Dispatches a custom event when the card is clicked.
    */
