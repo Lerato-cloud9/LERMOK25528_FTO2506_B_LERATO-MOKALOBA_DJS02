@@ -184,3 +184,37 @@ class PodcastCard extends HTMLElement {
       </article>
     `;
   }
+
+  **
+   * Sets up event listeners for user interactions.
+   * Dispatches a custom event when the card is clicked.
+   */
+  setupEventListeners() {
+    const card = this.shadowRoot.querySelector('.card');
+    
+    card.addEventListener('click', () => {
+      const podcastId = this.getAttribute('podcast-id');
+      
+      /**
+       * Custom event dispatched when a podcast card is clicked.
+       * 
+       * @event podcast-selected
+       * @type {CustomEvent}
+       * @property {Object} detail - Event details
+       * @property {string} detail.podcastId - The ID of the selected podcast
+       */
+      this.dispatchEvent(
+        new CustomEvent('podcast-selected', {
+          detail: { podcastId },
+          bubbles: true,
+          composed: true
+        })
+      );
+    });
+  }
+}
+
+// Register the custom element
+customElements.define('podcast-card', PodcastCard);
+
+export default PodcastCard;
