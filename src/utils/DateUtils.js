@@ -76,6 +76,29 @@ function format(isoDateString, options = {}) {
  * // Returns: "2 days ago"
  */
 
+function formatRelative(isoDateString) {
+  if (!isoDateString || typeof isoDateString !== 'string') {
+    return '';
+  }
+
+  try {
+    const date = new Date(isoDateString);
+    const now = new Date();
+    const diffInMs = now - date;
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 0) return 'Today';
+    if (diffInDays === 1) return 'Yesterday';
+    if (diffInDays < 7) return `${diffInDays} days ago`;
+    if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
+    if (diffInDays < 365) return `${Math.floor(diffInDays / 30)} months ago`;
+    return `${Math.floor(diffInDays / 365)} years ago`;
+  } catch (error) {
+    console.error('Error formatting relative date:', error);
+    return '';
+  }
+}
+
   format(dateStr) {
     const date = new Date(dateStr);
     return `Updated ${date.toLocaleDateString("en-US", {
