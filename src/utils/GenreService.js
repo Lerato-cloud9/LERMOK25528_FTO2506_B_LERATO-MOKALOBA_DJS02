@@ -10,6 +10,21 @@ import { genres } from "../data.js";
  * @principle SRP - Only responsible for genre data transformations
  */
 
+/**
+ * Retrieves genre names for an array of genre IDs.
+ * 
+ * @param {Array<number>} genreIds - Array of genre IDs to look up
+ * @returns {Array<string>} Array of genre names corresponding to the IDs
+ * 
+ * @example
+ * GenreService.getNames([1, 2])
+ * // Returns: ["Personal Growth", "Investigative Journalism"]
+ * 
+ * @example
+ * GenreService.getNames([999]) // Non-existent ID
+ * // Returns: []
+ */
+
 export const GenreService = {
   /**
    * Resolves an array of genre IDs into an array of genre titles.
