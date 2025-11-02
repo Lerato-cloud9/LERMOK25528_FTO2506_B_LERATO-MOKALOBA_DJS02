@@ -40,17 +40,23 @@ export function createGrid() {
       return;
     }
 
-  return {
-    /**
-     * Renders a list of podcast cards into the grid.
-     * @param {Object[]} podcastList - Array of podcast objects.
-     */
-    render(podcastList) {
-      container.innerHTML = "";
-      podcastList.forEach((p) => {
-        const card = createPodcastCard(p, createModal.open);
-        container.appendChild(card);
-      });
-    },
-  };
-};
+  
+    // Clear existing content
+    container.innerHTML = '';
+
+    // Create and append a podcast-card for each podcast
+    podcasts.forEach(podcast => {
+      // Get genre names from IDs
+      const genreNames = GenreService.getNames(podcast.genres);
+      const genresString = genreNames.join(', ');
+
+      // Create the custom element
+      const card = document.createElement('podcast-card');
+      
+      // Set attributes
+      card.setAttribute('podcast-id', podcast.id);
+      card.setAttribute('title', podcast.title);
+      card.setAttribute('image', podcast.image);
+      card.setAttribute('genres', genresString);
+      card.setAttribute('seasons', podcast.seasons);
+      card.setAttribute('updated', podcast.updated);
