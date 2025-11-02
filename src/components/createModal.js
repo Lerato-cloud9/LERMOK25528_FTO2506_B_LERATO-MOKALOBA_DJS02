@@ -79,6 +79,26 @@ const elements = {
   // Prevent body scroll when modal is open
   document.body.style.overflow = 'hidden';
 }
+
+/**
+ * Closes the modal and restores page scroll.
+ * 
+ * @example
+ * createModal.close();
+ */
+function close() {
+  if (!modal) {
+    console.error('Modal element not found');
+    return;
+  }
+
+  // Hide the modal
+  modal.classList.add('hidden');
+
+  // Restore body scroll
+  document.body.style.overflow = '';
+}
+
   return {
     /**
      * Opens the modal with podcast details.
