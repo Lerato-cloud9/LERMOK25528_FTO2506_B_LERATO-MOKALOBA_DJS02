@@ -24,6 +24,13 @@ import { seasons } from "../data.js";
  * @type {HTMLElement|null}
  */
 
+const modal = document.getElementById('modal');
+
+/**
+ * DOM element references for modal content.
+ * @type {Object}
+ */
+
 export const createModal = (() => {
   const el = (id) => document.getElementById(id);
   const modal = el("modal");
