@@ -34,6 +34,12 @@ export function createGrid() {
    * @throws {Error} If container element is not found
    */
 
+  function render(podcasts) {
+    if (!container) {
+      console.error('Grid container not found');
+      return;
+    }
+
   return {
     /**
      * Renders a list of podcast cards into the grid.
