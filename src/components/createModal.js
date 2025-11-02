@@ -19,6 +19,11 @@ import { seasons } from "../data.js";
  * createModal.close();
  */
 
+/**
+ * The modal container element from the DOM.
+ * @type {HTMLElement|null}
+ */
+
 export const createModal = (() => {
   const el = (id) => document.getElementById(id);
   const modal = el("modal");
