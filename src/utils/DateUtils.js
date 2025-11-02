@@ -40,7 +40,22 @@ function format(isoDateString, options = {}) {
     console.warn('DateUtils.format expects a valid ISO date string');
     return '';
   }
-  
+
+  try {
+    const date = new Date(isoDateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      console.warn(`Invalid date string: ${isoDateString}`);
+      return '';
+    }
+
+    const formatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit'
+    };
+
   format(dateStr) {
     const date = new Date(dateStr);
     return `Updated ${date.toLocaleDateString("en-US", {
