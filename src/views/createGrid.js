@@ -1,11 +1,17 @@
-import { createPodcastCard } from "../components/createPodcastCard.js";
-import { createModal } from "../components/createModal.js";
+import { GenreService } from '../utils/GenreService.js';
 
 /**
- * Grid Renderer - Responsible for rendering the grid of podcast cards.
- *
- * @principle SRP - Manages layout and rendering only; delegates card creation and modal logic elsewhere.
+ * Creates a grid renderer factory for displaying podcast cards.
+ * Uses the podcast-card Web Component for rendering individual podcasts.
+ * 
+ * @factory
+ * @returns {Object} Grid renderer object with render method
+ * 
+ * @example
+ * const grid = createGrid();
+ * grid.render(podcastList);
  */
+
 export const createGrid = () => {
   const container = document.getElementById("podcastGrid");
 
