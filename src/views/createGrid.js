@@ -60,3 +60,14 @@ export function createGrid() {
       card.setAttribute('genres', genresString);
       card.setAttribute('seasons', podcast.seasons);
       card.setAttribute('updated', podcast.updated);
+
+      // Append to container
+      container.appendChild(card);
+    });
+  }
+
+  // Return the public API
+  return {
+    render
+  };
+}
