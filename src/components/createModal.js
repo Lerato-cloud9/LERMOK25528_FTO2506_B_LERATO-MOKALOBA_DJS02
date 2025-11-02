@@ -117,7 +117,31 @@ function updateContent(podcast) {
     elements.image.src = podcast.image;
     elements.image.alt = `${podcast.title} cover`;
   }
-  
+
+    // Update description
+  if (elements.description) {
+    elements.description.textContent = podcast.description;
+  }
+
+  // Update genres
+  if (elements.genres) {
+    const genreNames = GenreService.getNames(podcast.genres);
+    elements.genres.innerHTML = genreNames
+      .map(name => `<span class="tag">${name}</span>`)
+      .join('');
+  }
+
+  // Update last updated date
+  if (elements.updated) {
+    elements.updated.textContent = DateUtils.format(podcast.updated);
+  }
+
+  // Update seasons list
+  if (elements.seasonList) {
+    renderSeasons(podcast.id);
+  }
+}
+
   return {
     /**
      * Opens the modal with podcast details.
