@@ -65,6 +65,17 @@ function format(isoDateString, options = {}) {
   }
 }
 
+/**
+ * Formats an ISO date string into a relative time format (e.g., "2 days ago").
+ * 
+ * @param {string} isoDateString - ISO 8601 date string
+ * @returns {string} Relative time string (e.g., "2 days ago", "3 months ago")
+ * 
+ * @example
+ * DateUtils.formatRelative("2022-11-01T07:00:00.000Z") // Called on Nov 3, 2022
+ * // Returns: "2 days ago"
+ */
+
   format(dateStr) {
     const date = new Date(dateStr);
     return `Updated ${date.toLocaleDateString("en-US", {
