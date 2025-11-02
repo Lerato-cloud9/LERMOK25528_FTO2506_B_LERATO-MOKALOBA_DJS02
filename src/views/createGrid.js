@@ -12,9 +12,13 @@ import { GenreService } from '../utils/GenreService.js';
  * grid.render(podcastList);
  */
 
-export const createGrid = () => {
-  const container = document.getElementById("podcastGrid");
-
+export function createGrid() {
+  /**
+   * The DOM element that will contain the grid of podcast cards.
+   * @type {HTMLElement|null}
+   */
+  const container = document.getElementById('podcastGrid');
+  
   return {
     /**
      * Renders a list of podcast cards into the grid.
