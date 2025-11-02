@@ -39,6 +39,21 @@ function getNames(genreIds) {
     .filter(name => name !== null);
 }
 
+/**
+ * Retrieves a single genre by its ID.
+ * 
+ * @param {number} genreId - The genre ID to look up
+ * @returns {Object|null} The genre object or null if not found
+ * @returns {number} returns.id - The genre ID
+ * @returns {string} returns.title - The genre name
+ * @returns {string} returns.description - The genre description
+ * @returns {Array<string>} returns.shows - Array of show IDs in this genre
+ * 
+ * @example
+ * GenreService.getById(1)
+ * // Returns: { id: 1, title: "Personal Growth", description: "...", shows: [...] }
+ */
+
 export const GenreService = {
   /**
    * Resolves an array of genre IDs into an array of genre titles.
